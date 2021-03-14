@@ -1,0 +1,17 @@
+{
+  "name": "amasty/course",
+  "version": "1.0.0",
+  "description": "Magento 2 module by Amasty",
+  "type": "magento2-module",
+  "require": {
+      "php": "~7.3.0||~7.4.0"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Amasty\\Cource\\": ""
+    }
+  }
+}
