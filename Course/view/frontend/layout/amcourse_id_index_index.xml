@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Amasty_Course::css/course.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <container name="amasty.course.main">
+                <block class="Magento\Framework\View\Element\Template"
+                       name="amasty.course.helloBlock"
+                       template="Amasty_Course::hello.phtml"/>
+                <block class="Amasty\Course\Block\Form"
+                       name="amasty.course.formBlock"
+                       template="Amasty_Course::form.phtml">
+                    <block name="amasty.course.additionalBlock"
+                           template="Amasty_Course::additional.phtml"/>
+                </block>
+            </container>
+        </referenceContainer>
+    </body>
+</page>
