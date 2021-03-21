@@ -1,15 +1,18 @@
 <?php
 /** @var Amasty\Course\Block\Form $block */
 ?>
+<?php
+$_className = $this->hasCssClass() ? $this->getCssClass() : '';
+?>
 
-<form class="am">
-    <div class="am">
+<form class="<?= $_className ?>">
+    <div class="<?= $_className ?>">
         <input name="sku" type="text"/>
     </div>
-    <div class="am">
+    <div class="<?= $_className ?>">
         <input name="qty" type="number"/>
     </div>
-    <div class="am">
+    <div class="<?= $_className ?>">
         <?= $block->getChildHtml('amasty.course.additionalBlock') ?>
     </div>
     <button type="submit" title="Add to Card" class="action tocart primary">
