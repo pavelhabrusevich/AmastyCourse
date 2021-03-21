@@ -5,7 +5,7 @@ namespace Amasty\Course\Block;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template;
 
-class Form extends Template
+class Hello extends Template
 {
     /**
      * @var ScopeConfigInterface
@@ -21,21 +21,8 @@ class Form extends Template
         parent::__construct($context, $data);
     }
 
-    public function showQty(): bool
+    public function greetingFromConfig(): string
     {
-        if ($this->scopeConfig->isSetFlag('am_course_config/general/show_qty')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function qty()
-    {
-        if ($qty = $this->scopeConfig->getValue('am_course_config/general/qty')) {
-            return $qty;
-        } else {
-            return '';
-        }
+        return $this->scopeConfig->getValue('am_course_config/general/greeting_text');
     }
 }

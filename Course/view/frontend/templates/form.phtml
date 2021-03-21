@@ -6,13 +6,27 @@ $_className = $this->hasCssClass() ? $this->getCssClass() : '';
 ?>
 
 <form class="<?= $_className ?>">
-    <div class="<?= $_className ?>">
-        <input name="sku" type="text"/>
+    <div class="am">
+        <label for="sku">
+            <span>Product SKU</span>
+        </label>
+        <div class="am">
+            <input id="sku" name="sku" type="text"/>
+        </div>
     </div>
-    <div class="<?= $_className ?>">
-        <input name="qty" type="number"/>
-    </div>
-    <div class="<?= $_className ?>">
+
+    <?php if ($block->showQty()) { ?>
+        <div class="am">
+            <label for="qty">
+                <span>Product Qty</span>
+            </label>
+            <div class="am">
+                <input id="qty" name="qty" type="number" value="<?= $block->qty() ?>"/>
+            </div>
+        </div>
+    <?php } ?>
+
+    <div class="am">
         <?= $block->getChildHtml('amasty.course.additionalBlock') ?>
     </div>
     <button type="submit" title="Add to Card" class="action tocart primary">

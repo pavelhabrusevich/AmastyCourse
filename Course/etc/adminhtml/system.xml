@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Amasty_Course" translate="label" sortOrder="10">
+            <label>Amasty Course Module</label>
+        </tab>
+        <section id="am_course_config" translate="label" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Amasty Course Config</label>
+            <tab>Amasty_Course</tab>
+            <resource>Amasty_Course::config</resource>
+            <group id="general" translate="label" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="enabled" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="greeting_text" type="textarea" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Greeting Text</label>
+                    <validate>required-entry</validate>
+                </field>
+                <field id="show_qty" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Show Product Qty</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="qty" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Product Qty</label>
+                <validate>validate-digits</validate>
+                <depends>
+                    <field id="show_qty">1</field>
+                </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
