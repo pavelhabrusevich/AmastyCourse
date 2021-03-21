@@ -2,28 +2,28 @@
 
 namespace Amasty\Course\Block;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Amasty\Course\Model\ConfigProvider;
 use Magento\Framework\View\Element\Template;
 
 class Form extends Template
 {
     /**
-     * @var ScopeConfigInterface
+     * @var ConfigProvider
      */
-    private $scopeConfig;
+    private $configProvider;
 
     public function __construct(
         Template\Context $context,
-        ScopeConfigInterface $scopeConfig,
+        ConfigProvider $configProvider,
         array $data = []
     ) {
-        $this->scopeConfig = $scopeConfig;
+        $this->configProvider = $configProvider;
         parent::__construct($context, $data);
     }
 
     public function showQty(): bool
     {
-        if ($this->scopeConfig->isSetFlag('am_course_config/general/show_qty')) {
+        if ($this->configProvider->isEnabledShowQty()) {
             return true;
         } else {
             return false;
@@ -32,7 +32,8 @@ class Form extends Template
 
     public function qty()
     {
-        if ($qty = $this->scopeConfig->getValue('am_course_config/general/qty')) {
+        $qty = $this->configProvider->getQty();
+        if ($qty) {
             return $qty;
         } else {
             return '';
