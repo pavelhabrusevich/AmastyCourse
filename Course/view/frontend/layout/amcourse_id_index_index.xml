@@ -16,6 +16,9 @@
                        template="Amasty_Course::form.phtml">
                     <block name="amasty.course.additionalBlock"
                            template="Amasty_Course::additional.phtml"/>
+                    <arguments>
+                        <argument name="css_class" xsi:type="string">am</argument>
+                    </arguments>
                 </block>
             </container>
         </referenceContainer>
