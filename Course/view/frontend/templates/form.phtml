@@ -5,16 +5,15 @@
 $_className = $this->hasCssClass() ? $this->getCssClass() : '';
 ?>
 
-<form class="<?= $_className ?>">
+<form class="<?= $_className ?>" action="<?= $block->getUrlAction() ?>" method="post">
     <div class="am">
         <label for="sku">
             <span>Product SKU</span>
         </label>
         <div class="am">
-            <input id="sku" name="sku" type="text"/>
+            <input id="sku" name="sku" type="text" value=""/>
         </div>
     </div>
-
     <?php if ($block->showQty()) { ?>
         <div class="am">
             <label for="qty">
@@ -25,7 +24,6 @@ $_className = $this->hasCssClass() ? $this->getCssClass() : '';
             </div>
         </div>
     <?php } ?>
-
     <div class="am">
         <?= $block->getChildHtml('amasty.course.additionalBlock') ?>
     </div>

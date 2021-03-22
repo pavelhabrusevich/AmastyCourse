@@ -39,4 +39,9 @@ class Form extends Template
             return '';
         }
     }
+
+    public function getUrlAction()
+    {
+        return $this->getUrl('amcourse/index/form', ['_secure' => true]);
+    }
 }
