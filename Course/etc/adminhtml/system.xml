@@ -3,7 +3,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="Amasty_Course" translate="label" sortOrder="10">
+        <tab id="Amasty_Course" translate="label" sortOrder="100000">
             <label>Amasty Course Module</label>
         </tab>
         <section id="am_course_config" translate="label" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">

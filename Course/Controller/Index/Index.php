@@ -4,30 +4,31 @@ namespace Amasty\Course\Controller\Index;
 
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Controller\ResultFactory;
+use Amasty\Course\Model\ConfigProvider;
 
 class Index extends Action
 {
     /**
-     * @var ScopeConfigInterface
+     * @var ConfigProvider
      */
     private $scopeConfig;
 
     public function __construct(
         Context $context,
-        ScopeConfigInterface $scopeConfig
+        ConfigProvider $scopeConfig
     ) {
-        parent::__construct($context);
         $this->scopeConfig = $scopeConfig;
+        parent::__construct($context);
     }
 
     public function execute()
     {
-        if ($this->scopeConfig->isSetFlag('am_course_config/general/enabled')) {
+        if ($this->scopeConfig->isEnabledModule()) {
             return $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         } else {
-            die('Module is disabled');
+            $resultForward = $this->resultFactory->create(ResultFactory::TYPE_FORWARD);
+            return $resultForward->forward('defaultNoRoute');
         }
     }
 }

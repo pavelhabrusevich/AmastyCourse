@@ -1,33 +1,30 @@
 <?php
 /** @var Amasty\Course\Block\Form $block */
-?>
-<?php
-$_className = $this->hasCssClass() ? $this->getCssClass() : '';
+
+$className = $block->hasCssClass() ? $block->getCssClass() : '';
 ?>
 
-<form class="<?= $_className ?>">
+<form class="<?= $className ?>" action="<?= $block->getUrlAction() ?>" method="post">
     <div class="am">
         <label for="sku">
             <span>Product SKU</span>
         </label>
-        <div class="am">
-            <input id="sku" name="sku" type="text"/>
+        <div>
+            <input id="sku" name="sku" type="text" value=""/>
         </div>
     </div>
-
-    <?php if ($block->showQty()) { ?>
+    <?php if ($block->showQty()): ?>
         <div class="am">
             <label for="qty">
                 <span>Product Qty</span>
             </label>
-            <div class="am">
-                <input id="qty" name="qty" type="number" value="<?= $block->qty() ?>"/>
+            <div>
+                <input id="qty" name="qty" type="number" min="0" value="<?= $block->getQty() ?>"/>
             </div>
         </div>
-    <?php } ?>
-
+    <?php endif; ?>
     <div class="am">
-        <?= $block->getChildHtml('amasty.course.additionalBlock') ?>
+        <?= $block->getChildHtml() ?>
     </div>
     <button type="submit" title="Add to Card" class="action tocart primary">
         <span>Add to Card</span>
