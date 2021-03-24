@@ -2,11 +2,13 @@
 
 namespace Amasty\Course\Controller\Index;
 
-use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product\Type;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class Form extends Action
 {
@@ -16,18 +18,18 @@ class Form extends Action
     private $checkoutSession;
 
     /**
-     * @var ProductCollectionFactory
+     * @var ProductRepositoryInterface
      */
-    private $productCollectionFactory;
+    private $productRepository;
 
     public function __construct(
         Context $context,
         CheckoutSession $checkoutSession,
-        ProductCollectionFactory $productCollectionFactory
+        ProductRepositoryInterface $productRepository
     ) {
         parent::__construct($context);
         $this->checkoutSession = $checkoutSession;
-        $this->productCollectionFactory = $productCollectionFactory;
+        $this->productRepository = $productRepository;
     }
 
     public function execute()
@@ -43,22 +45,27 @@ class Form extends Action
 //            $quote->save();
 //        }
 
-            $productCollection = $this->productCollectionFactory->create();
-            $productCollection->addAttributeToFilter('sku', [$sku]);
-            $product = $productCollection->getFirstItem();
+            $redirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
 
-            // проверяем тип продукта
-            if ($product->getTypeId() === \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE) {
-                $quote->addProduct($product, $qty);
-                $quote->save();
-                $this->messageManager->addSuccessMessage('Product is Added');
-            } else {
-                $this->messageManager->addWarningMessage('Only Simple Product');
+            try {
+                $product = $this->productRepository->get($sku);
+                if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
+                    $this->messageManager->addWarningMessage('Only simple product is available');
+
+                    return $redirect->setUrl('/amcourse');
+                }
+                $salableQty = $product->getQuantityAndStockStatus();
+                if ($salableQty['qty'] >= $qty) {
+                    $quote->addProduct($product, $qty);
+                    $quote->save();
+                    $this->messageManager->addSuccessMessage('Product is added');
+                } else {
+                    $this->messageManager->addErrorMessage('Product quantity is not available');
+                }
+            } catch (NoSuchEntityException $exception) {
+                $this->messageManager->addErrorMessage('Product does not exist');
             }
 
-            //остальные проверки в процессе
-
-            $redirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
             return $redirect->setUrl('/amcourse');
         }
     }
