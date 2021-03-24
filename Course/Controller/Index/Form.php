@@ -32,30 +32,34 @@ class Form extends Action
 
     public function execute()
     {
-        $formValue = $this->getRequest()->getPost();
-        $sku = $formValue['sku'];
-        $qty = $formValue['qty'];
+        if ($this->getRequest()->getPost()) {
+            $sku = $this->getRequest()->getPost()['sku'];
+            $qty = $this->getRequest()->getPost()['qty'];
 
-        $quote = $this->checkoutSession->getQuote();
-        if (!$quote->getId()) {
-            $quote->save();
+            $quote = $this->checkoutSession->getQuote(); // реализовать через ресурсную модель, когда разберем
+
+            // на лекции мы сохраняли квоту на случай, если ее не будет. https://youtu.be/DlRsOUiacrE?list=PLjdyzbzyb4VQSKEGfRgWfXIxJetQ1_IEj&t=3298
+//        if (!$quote->getId()) {
+//            $quote->save();
+//        }
+
+            $productCollection = $this->productCollectionFactory->create();
+            $productCollection->addAttributeToFilter('sku', [$sku]);
+            $product = $productCollection->getFirstItem();
+
+            // проверяем тип продукта
+            if ($product->getTypeId() === \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE) {
+                $quote->addProduct($product, $qty);
+                $quote->save();
+                $this->messageManager->addSuccessMessage('Product is Added');
+            } else {
+                $this->messageManager->addWarningMessage('Only Simple Product');
+            }
+
+            //остальные проверки в процессе
+
+            $redirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+            return $redirect->setUrl('/amcourse');
         }
-
-        $productCollection = $this->productCollectionFactory->create();
-        $productCollection->addAttributeToFilter('sku', [$sku]);
-        $product = $productCollection->getFirstItem();
-
-        // проверяем тип продукта
-        if ($product->getData('type_id') == 'simple') {
-            $quote->addProduct($product, $qty);
-            $quote->save();
-        } else {
-            $this->messageManager->addWarningMessage('Only Simple Product');
-        }
-
-        //остальные проверки в процессе
-
-        $redirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        return $redirect->setUrl('/amcourse');
     }
 }

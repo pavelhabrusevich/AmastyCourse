@@ -6,6 +6,7 @@
         <am_course_config>
             <general>
                 <enabled>0</enabled>
+                <greeting_text>Hello</greeting_text>
                 <show_qty>0</show_qty>
             </general>
         </am_course_config>

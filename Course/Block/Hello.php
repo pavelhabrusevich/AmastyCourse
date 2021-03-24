@@ -2,19 +2,19 @@
 
 namespace Amasty\Course\Block;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Template;
+use Amasty\Course\Model\ConfigProvider;
 
 class Hello extends Template
 {
     /**
-     * @var ScopeConfigInterface
+     * @var ConfigProvider
      */
     private $scopeConfig;
 
     public function __construct(
         Template\Context $context,
-        ScopeConfigInterface $scopeConfig,
+        ConfigProvider $scopeConfig,
         array $data = []
     ) {
         $this->scopeConfig = $scopeConfig;
@@ -23,6 +23,6 @@ class Hello extends Template
 
     public function greetingFromConfig(): string
     {
-        return $this->scopeConfig->getValue('am_course_config/general/greeting_text');
+        return $this->scopeConfig->getGreeting();
     }
 }

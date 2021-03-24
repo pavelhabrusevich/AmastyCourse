@@ -23,21 +23,12 @@ class Form extends Template
 
     public function showQty(): bool
     {
-        if ($this->configProvider->isEnabledShowQty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->configProvider->isEnabledShowQty();
     }
 
-    public function qty()
+    public function getQty(): string
     {
-        $qty = $this->configProvider->getQty();
-        if ($qty) {
-            return $qty;
-        } else {
-            return '';
-        }
+        return $this->configProvider->getQty() ?? '';
     }
 
     public function getUrlAction()
