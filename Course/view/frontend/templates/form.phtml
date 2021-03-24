@@ -10,7 +10,7 @@ $className = $block->hasCssClass() ? $block->getCssClass() : '';
             <span>Product SKU</span>
         </label>
         <div>
-            <input id="sku" name="sku" type="text" value=""/>
+            <input id="sku" name="sku" type="text" required="true" value=""/>
         </div>
     </div>
     <?php if ($block->showQty()): ?>
@@ -19,7 +19,7 @@ $className = $block->hasCssClass() ? $block->getCssClass() : '';
                 <span>Product Qty</span>
             </label>
             <div>
-                <input id="qty" name="qty" type="number" min="0" value="<?= $block->getQty() ?>"/>
+                <input id="qty" name="qty" type="number" required="true" min="0" value="<?= $block->getQty() ?>"/>
             </div>
         </div>
     <?php endif; ?>
@@ -30,3 +30,5 @@ $className = $block->hasCssClass() ? $block->getCssClass() : '';
         <span>Add to Card</span>
     </button>
 </form>
+
+
