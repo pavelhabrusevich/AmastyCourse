@@ -9,8 +9,8 @@ $className = $block->hasCssClass() ? $block->getCssClass() : '';
         <label for="sku">
             <span>Product SKU</span>
         </label>
-        <div>
-            <input id="sku" name="sku" type="text" required="true" value=""/>
+        <div data-bind="scope: 'amcourseAutocomplete'">
+            <!-- ko template: getTemplate() --><!-- /ko -->
         </div>
     </div>
     <?php if ($block->showQty()): ?>
@@ -30,5 +30,20 @@ $className = $block->hasCssClass() ? $block->getCssClass() : '';
         <span>Add to Card</span>
     </button>
 </form>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "amcourseAutocomplete": {
+                        "component": "Amasty_Course/js/koAutocomplete",
+                        "template": "Amasty_Course/koAutocomplete"
+                    }
+                }
+            }
+        }
+    }
+</script>
 
 

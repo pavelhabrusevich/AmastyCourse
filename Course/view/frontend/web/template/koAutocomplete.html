@@ -1,0 +1,12 @@
+<!--реализован вывод товаров по SKU. Но внешне вывод кривоват местами. Оставил пока так-->
+<div>
+    <input type="text" name="sku" id="sku" required="true" value="" data-bind="textInput: searchText"/>
+    <div>
+        <ul data-bind="foreach: searchResult">
+            <div>
+                <span data-bind="text: sku"></span>
+                <span data-bind="text: name"></span>
+            </div>
+        </ul>
+    </div>
+</div>
