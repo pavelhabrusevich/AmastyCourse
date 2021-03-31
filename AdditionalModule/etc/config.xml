@@ -3,13 +3,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <am_course_config>
+        <am_additional_config>
             <general>
                 <enabled>0</enabled>
-                <greeting_text>Hello</greeting_text>
-                <show_qty>0</show_qty>
-                <qty>1</qty>
+                <magento_add_product>1</magento_add_product>
             </general>
-        </am_course_config>
+        </am_additional_config>
     </default>
 </config>

@@ -8,6 +8,7 @@ use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Event\ManagerInterface as EventManager;
 use Magento\Framework\Exception\NoSuchEntityException;
 
 class Form extends Action
@@ -22,41 +23,50 @@ class Form extends Action
      */
     private $productRepository;
 
+    /**
+     * @var EventManager
+     */
+    private $eventManager;
+
     public function __construct(
         Context $context,
         CheckoutSession $checkoutSession,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        EventManager $eventManager
     ) {
         parent::__construct($context);
         $this->checkoutSession = $checkoutSession;
         $this->productRepository = $productRepository;
+        $this->eventManager = $eventManager;
     }
 
     public function execute()
     {
-        if ($this->getRequest()->getPost()) {
-            $sku = $this->getRequest()->getPost()['sku'];
-            $qty = $this->getRequest()->getPost()['qty'];
+        $addedProductSku = $this->getRequest()->getParam('sku');
+        $addedProductQty = $this->getRequest()->getPost()['qty'];
+
+        $this->eventManager->dispatch(
+            'amasty_add_promo_product_to_cart',
+            ['added_promo_product' => $addedProductSku]
+        );
+
+        $redirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+
+        if (isset($addedProductQty) && $addedProductQty > 0) {
 
             $quote = $this->checkoutSession->getQuote(); // реализовать через ресурсную модель, когда разберем
 
-            // на лекции мы сохраняли квоту на случай, если ее не будет. https://youtu.be/DlRsOUiacrE?list=PLjdyzbzyb4VQSKEGfRgWfXIxJetQ1_IEj&t=3298
-//        if (!$quote->getId()) {
-//            $quote->save();
-//        }
-
-            $redirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
 
             try {
-                $product = $this->productRepository->get($sku);
+                $product = $this->productRepository->get($addedProductSku);
                 if ($product->getTypeId() !== Type::TYPE_SIMPLE) {
                     $this->messageManager->addWarningMessage('Only simple product is available');
 
                     return $redirect->setUrl('/amcourse');
                 }
                 $salableQty = $product->getQuantityAndStockStatus();
-                if ($salableQty['qty'] >= $qty) {
-                    $quote->addProduct($product, $qty);
+                if ($salableQty['qty'] >= $addedProductQty) {
+                    $quote->addProduct($product, $addedProductQty);
                     $quote->save();
                     $this->messageManager->addSuccessMessage('Product is added');
                 } else {
@@ -66,6 +76,9 @@ class Form extends Action
                 $this->messageManager->addErrorMessage('Product does not exist');
             }
 
+            return $redirect->setUrl('/amcourse');
+        } else {
+            $this->messageManager->addErrorMessage('Enable product quantity field in module configuration');
             return $redirect->setUrl('/amcourse');
         }
     }

@@ -19,7 +19,7 @@ $className = $block->hasCssClass() ? $block->getCssClass() : '';
                 <span>Product Qty</span>
             </label>
             <div>
-                <input id="qty" name="qty" type="number" required="true" min="0" value="<?= $block->getQty() ?>"/>
+                <input id="qty" name="qty" type="number" required="true" min="1" value="<?= $block->getQty() ?>"/>
             </div>
         </div>
     <?php endif; ?>
