@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Amasty_AdditionalModule" translate="label" sortOrder="100001">
+            <label>Amasty Additional Module</label>
+        </tab>
+        <section id="am_additional_config" translate="label" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Amasty Additional Module Config</label>
+            <tab>Amasty_AdditionalModule</tab>
+            <resource>Amasty_AdditionalModule::config</resource>
+            <group id="general" translate="label" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General Configuration</label>
+                <field id="enabled" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Add Promo Product</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="promo_sku" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Promo SKU</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[Add product SKU you want add to cart as a bonus]]></comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="for_sku" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>For SKU</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[Promo product will be added fot the next products. SKU comma separated]]></comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+                <field id="magento_add_product" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use \Magento\Checkout\Controller\Cart\Add</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
