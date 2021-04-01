@@ -7,6 +7,7 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\Message\ManagerInterface;
 
 class AddPromoSku implements ObserverInterface
 {
@@ -25,14 +26,21 @@ class AddPromoSku implements ObserverInterface
      */
     private $productRepository;
 
+    /**
+     * @var ManagerInterface
+     */
+    private $messageManager;
+
     public function __construct(
         ConfigProvider $configProvider,
         CheckoutSession $checkoutSession,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        ManagerInterface $messageManager
     ) {
         $this->configProvider = $configProvider;
         $this->checkoutSession = $checkoutSession;
         $this->productRepository = $productRepository;
+        $this->messageManager = $messageManager;
     }
 
     public function execute(Observer $observer)
@@ -54,6 +62,7 @@ class AddPromoSku implements ObserverInterface
                     $quote = $this->checkoutSession->getQuote();
                     $quote->addProduct($promoProduct, 1);
                     $quote->save();
+                    $this->messageManager->addSuccessMessage('Promo product is added');
                 }
             }
         }

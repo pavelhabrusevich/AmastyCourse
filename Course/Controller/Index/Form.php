@@ -67,6 +67,7 @@ class Form extends Action
                 $salableQty = $product->getQuantityAndStockStatus();
                 if ($salableQty['qty'] >= $addedProductQty) {
                     $quote->addProduct($product, $addedProductQty);
+                    $quote->collectTotals();
                     $quote->save();
                     $this->messageManager->addSuccessMessage('Product is added');
                 } else {
