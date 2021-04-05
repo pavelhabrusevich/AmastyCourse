@@ -2,7 +2,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <event name="amasty_add_promo_product_to_cart">
+    <event name="amasty_add_product_to_cart">
         <observer name="promoProductIsAdded"
                   instance="Amasty\AdditionalModule\Observer\AddPromoSku"/>
     </event>

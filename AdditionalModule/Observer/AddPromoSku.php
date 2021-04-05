@@ -56,7 +56,7 @@ class AddPromoSku implements ObserverInterface
         }
 
         if ($isEnabledModule && $promoProduct) {
-            $addedProduct = $observer->getData('added_promo_product');
+            $addedProduct = $observer->getData('added_product');
             foreach ($forSku as $sku) {
                 if ($sku === $addedProduct) {
                     $quote = $this->checkoutSession->getQuote();

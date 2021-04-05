@@ -5,4 +5,7 @@
     <type name="Amasty\AdditionalModule\Observer\AddPromoSku">
         <plugin name="checkRequestType" type="Amasty\Course\Plugin\CheckRequestType"/>
     </type>
+    <type name="Amasty\Course\Controller\Index\Form">
+        <plugin name="blackListProduct" type="Amasty\Course\Plugin\BlacklistProduct"/>
+    </type>
 </config>

@@ -2,5 +2,5 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-<!--        <preference for="Amasty\Course\Controller\Index\Index" type="Amasty\AdditionalModule\Controller\Index\Index"/>-->
+    <preference for="Amasty\Course\Api\BlacklistRepositoryInterface" type="Amasty\Course\Model\BlacklistRepository"/>
 </config>
