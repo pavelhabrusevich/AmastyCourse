@@ -6,7 +6,7 @@
         <am_additional_config>
             <general>
                 <enabled>0</enabled>
-                <magento_add_product>1</magento_add_product>
+                <magento_add_product>0</magento_add_product>
             </general>
         </am_additional_config>
     </default>

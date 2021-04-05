@@ -46,8 +46,8 @@ class Form extends Action
         $addedProductQty = $this->getRequest()->getPost()['qty'];
 
         $this->eventManager->dispatch(
-            'amasty_add_promo_product_to_cart',
-            ['added_promo_product' => $addedProductSku]
+            'amasty_add_product_to_cart',
+            ['added_product' => $addedProductSku]
         );
 
         $redirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
@@ -55,7 +55,6 @@ class Form extends Action
         if (isset($addedProductQty) && $addedProductQty > 0) {
 
             $quote = $this->checkoutSession->getQuote(); // реализовать через ресурсную модель, когда разберем
-
 
             try {
                 $product = $this->productRepository->get($addedProductSku);
@@ -80,6 +79,7 @@ class Form extends Action
             return $redirect->setUrl('/amcourse');
         } else {
             $this->messageManager->addErrorMessage('Enable product quantity field in module configuration');
+
             return $redirect->setUrl('/amcourse');
         }
     }

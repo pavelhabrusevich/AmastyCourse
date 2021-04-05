@@ -19,6 +19,7 @@ class ChangeProductType
      * @var RequestInterface
      */
     private $request;
+
     /**
      * @var EventManager
      */
@@ -54,8 +55,8 @@ class ChangeProductType
             $productSku = $this->request->getParam('sku');
 
             $this->eventManager->dispatch(
-                'amasty_add_promo_product_to_cart',
-                ['added_promo_product' => $productSku]
+                'amasty_add_product_to_cart',
+                ['added_product' => $productSku]
             );
 
             $product = $this->productRepository->get($productSku);
