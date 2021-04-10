@@ -1,6 +1,7 @@
 <?php
 
 namespace Amasty\Course\Model;
+
 use Magento\Framework\Model\AbstractModel;
 
 /**

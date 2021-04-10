@@ -30,7 +30,7 @@ class InstallSchema implements InstallSchemaInterface
             ->addColumn(
                 'product_sku',
                 Table::TYPE_TEXT,
-                '64',
+                64,
                 [
                     'nullable' => false,
                     'default' => ''
@@ -39,11 +39,11 @@ class InstallSchema implements InstallSchemaInterface
             )
             ->addColumn(
                 'product_qty',
-                Table::TYPE_DECIMAL,
-                12,
+                Table::TYPE_INTEGER,
+                null,
                 [
-                    'nullable' => true,
-                    'default' => null
+                    'unsigned' => true,
+                    'nullable' => false
                 ],
                 'Product Qty'
             )

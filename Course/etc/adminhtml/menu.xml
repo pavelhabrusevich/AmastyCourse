@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Amasty_Course::menu"
+             title="Amasty"
+             module="Amasty_Course"
+             sortOrder="70"
+             resource="Amasty_Course::menu"
+        />
+        <add id="Amasty_Course::blacklist"
+             title="Blacklist"
+             module="Amasty_Course"
+             sortOrder="10"
+             resource="Amasty_Course::blacklist"
+             parent="Amasty_Course::menu"
+             action="amcourse/blacklist"
+        />
+    </menu>
+</config>
